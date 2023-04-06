@@ -1,0 +1,6 @@
+# folder
+node_modules
+
+# files
+.env
+src/database/db.sqlite
