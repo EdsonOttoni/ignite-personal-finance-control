@@ -6,7 +6,7 @@
 
 # Regra de Negocio
 - A transação pode ser do tipo crédito que somará ao valor total, ou débito subtrairá.
-- Deve ser possível identificarmos o usuário entre as requisições.
+- Deve ser possível identificarmos o usuário entre as requisições através dos cookies.
 - o usuário só pode visualizar transações o qual ele criou.
 
 # Requisito Não Funcional
