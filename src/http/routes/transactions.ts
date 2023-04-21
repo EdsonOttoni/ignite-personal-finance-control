@@ -3,23 +3,19 @@ import { randomUUID } from 'node:crypto'
 import { z } from 'zod'
 
 import { knex } from '../../database'
-import { EXPIRATION_TIME_OF_COOKIES_IN_MILLISECONDS } from '../../utils/variables'
+import { EXPIRATION_TIME_OF_COOKIES_IN_MS } from '../../utils/variables'
 import { checkSessionIdExist } from '../middlewares/check-session-id-exist'
 
 export async function transactionsRoutes(app: FastifyInstance) {
-  app.get(
-    '/',
-    { preHandler: [checkSessionIdExist] },
-    async (request, replay) => {
-      const { sessionId } = request.cookies
+  app.get('/', { preHandler: [checkSessionIdExist] }, async request => {
+    const { sessionId } = request.cookies
 
-      const transactions = await knex('transactions')
-        .where('session_id', sessionId)
-        .select()
+    const transactions = await knex('transactions')
+      .where('session_id', sessionId)
+      .select()
 
-      return { transactions }
-    }
-  )
+    return { transactions }
+  })
 
   app.get('/:id', { preHandler: [checkSessionIdExist] }, async request => {
     const getTransactionParamsSchema = z.object({
@@ -44,7 +40,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
     const { sessionId } = request.cookies
 
     const summary = await knex('transactions')
-      .where('session_id', sessionId)
+      .where('', sessionId)
       .sum('amount', { as: 'amount' })
       .first()
 
@@ -69,7 +65,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
 
       reply.cookie('sessionId', sessionId, {
         path: '/',
-        maxAge: EXPIRATION_TIME_OF_COOKIES_IN_MILLISECONDS,
+        maxAge: EXPIRATION_TIME_OF_COOKIES_IN_MS,
       })
     }
 

@@ -6,7 +6,7 @@ import { transactionsRoutes } from './http/routes/transactions'
 import { env } from './utils/env'
 
 async function initializedServer() {
-  const app = fastify({ logger: true })
+  const app = fastify()
 
   app.register(cookie)
 
