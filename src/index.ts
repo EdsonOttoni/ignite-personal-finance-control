@@ -3,6 +3,7 @@ import cookie from '@fastify/cookie'
 import fastify from 'fastify'
 
 import { transactionsRoutes } from './http/routes/transactions'
+import { usersRoutes } from './http/routes/users'
 import { env } from './utils/env'
 
 async function initializedServer() {
@@ -10,6 +11,9 @@ async function initializedServer() {
 
   app.register(cookie)
 
+  app.register(usersRoutes, {
+    prefix: 'users',
+  })
   app.register(transactionsRoutes, {
     prefix: 'transactions',
   })
